@@ -9,6 +9,7 @@ bindiffs(x::T where T<:AbstractArray) = x[2:end]- x[1:end-1]
 entries(w::weightedHistogram) = length.(w.aow)
 contents(w::weightedHistogram) =  sum.(w.aow)
 bincenters(w::weightedHistogram) = bincenters(w.bins)
+nbins(w::weightedHistogram) = length(w.bins)-1
 yerror(w::weightedHistogram) =  sqrt.(sum.(abs2, w.aow))
 xerror(w::weightedHistogram) =  bindiffs(w.bins) ./ 2
 

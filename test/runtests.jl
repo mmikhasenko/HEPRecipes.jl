@@ -23,6 +23,7 @@ w0 = weightedHistogram(sample, bins=bins, weights=one.(weights))
 end
 
 @testset "interfaces" begin
+    @test nbins(w0) == length(bins)-1
     @test prod(entries(w0) .== length.(w0.aow))
     @test prod(contents(w0) .≈ sum.(w0.aow))
     @test prod(bincenters(w0) .≈ (w0.bins[2:end] + w0.bins[1:end-1]) / 2)
@@ -45,3 +46,16 @@ end
     # savefig(joinpath("plots","example.png"))
     @test true
 end
+
+
+@testset "pull" begin
+    f(x;μ=0.5,σ=0.1) = 1/sqrt(2π)/σ * exp(-(x-μ)^2/2/σ^2)
+    sample = rand(10_000)
+    w5 = weightedHistogram(sample, bins=10, weights=f.(sample))
+    g(x) = f(x)*sum(entries(w5))
+    p = pull(w5, g)
+    @test hasproperty(p, :wh)
+    @test hasproperty(p, :g)
+    @test sum(plot(p)[1][3][:y])/nbins(w5) < 1
+end
+
