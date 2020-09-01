@@ -13,9 +13,9 @@ function weightedHistogram(values::Array{T} where T<:Real,
     nweights = weights_in_range ./ sum(weights_in_range) .* length(weights_in_range)
     # 
     weightedHistogram(
-        bins,
         [nweights[map(x->l<x<r, values_in_range)]
-                    for (l,r) in zip(bins[1:end-1], bins[2:end])]
+                    for (l,r) in zip(bins[1:end-1], bins[2:end])],
+        bins
     )
 end
 
