@@ -34,6 +34,6 @@ end
     weights = map(x->exp(-x^2/2/0.3^2), sample)
     # 
     plot(weightedHistogram(sample, bins = 30, weights = weights))
-    savefig(joinpath("plots","example.png"))
+    # savefig(joinpath("plots","example.png"))
     @test true
 end
