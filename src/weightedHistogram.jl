@@ -3,6 +3,15 @@ struct weightedHistogram{T<:AbstractVector, E<:AbstractVector}
     bins::E
 end
 
+bincenters(x::T where T<:AbstractArray) = (x[1:end-1] + x[2:end]) ./ 2
+bindiffs(x::T where T<:AbstractArray) = x[2:end]- x[1:end-1]
+# 
+entries(w::weightedHistogram) = length.(w.aow)
+contents(w::weightedHistogram) =  sum.(w.aow)
+bincenters(w::weightedHistogram) = bincenters(w.bins)
+yerror(w::weightedHistogram) =  sqrt.(sum.(abs2, w.aow))
+xerror(w::weightedHistogram) =  bindiffs(w.bins) ./ 2
+
 function weightedHistogram(values::Array{T} where T<:Real,
     bins::E where E<:AbstractVector,
     weights::Array{T} where T<:Real)

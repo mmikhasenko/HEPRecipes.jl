@@ -22,6 +22,14 @@ w0 = weightedHistogram(sample, bins=bins, weights=one.(weights))
     @test prod(w3.aow ≈ w2.aow)
 end
 
+@testset "interfaces" begin
+    @test prod(entries(w0) .== length.(w0.aow))
+    @test prod(contents(w0) .≈ sum.(w0.aow))
+    @test prod(bincenters(w0) .≈ (w0.bins[2:end] + w0.bins[1:end-1]) / 2)
+    @test prod(yerror(w0) .≈ sqrt.(sum.(abs2, w0.aow)))
+    @test prod(xerror(w0) .≈ (w0.bins[2:end] - w0.bins[1:end-1]) / 2)
+end
+
 @testset "recipe" begin
     p = plot(w0)
     @test length(p[1][1][:x]) == (length(bins)-1)*3 # x markers
