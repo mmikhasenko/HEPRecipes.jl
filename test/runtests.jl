@@ -28,3 +28,12 @@ end
     @test length(p[1][2][:y]) == (length(bins)-1)*3 # y markers
     @test length(p[1][3][:x]) == length(bins)-1 # dot markers
 end
+
+@testset "saveplot" begin
+    sample = 2 .* rand(1000) .- 1
+    weights = map(x->exp(-x^2/2/0.3^2), sample)
+    # 
+    plot(weightedHistogram(sample, bins = 30, weights = weights))
+    savefig(joinpath("plots","example.png"))
+    @test true
+end
