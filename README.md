@@ -16,4 +16,4 @@ weights = randm(1000) * 0.3
 
 plot(weightedHistogram(rand(1000), bins = 30, weights = weights))
 ```
-![gaus](plots/example.png)
+<img src="plots/example.png" alt="gauss wights" style="width: 300px;"/>
