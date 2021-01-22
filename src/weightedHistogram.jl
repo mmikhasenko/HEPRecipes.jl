@@ -13,9 +13,11 @@ nbins(w::weightedHistogram) = length(w.bins)-1
 yerror(w::weightedHistogram) =  sqrt.(sum.(abs2, w.aow))
 xerror(w::weightedHistogram) =  bindiffs(w.bins) ./ 2
 
-function weightedHistogram(values::Array{T} where T<:Real,
+const AbstractVectorReal = AbstractVector{T} where T <: Real
+
+function weightedHistogram(values::V where V <: AbstractVectorReal,
     bins::E where E<:AbstractVector,
-    weights::Array{T} where T<:Real)
+    weights::V where V <: AbstractVectorReal)
     # normalize the weights
     filt = map(x->bins[1]<x<bins[end], values)
     weights_in_range = weights[filt]
@@ -28,15 +30,18 @@ function weightedHistogram(values::Array{T} where T<:Real,
     )
 end
 
-weightedHistogram(values::Array{T} where T<:Real,
+# bins::Integer
+weightedHistogram(values::V where V <: AbstractVectorReal,
     bins::E where E<:Integer;
-    weights::Array{T} where T<:Real = one.(values)) =
+    weights::V where V <: AbstractVectorReal = one.(values)) =
         weightedHistogram(values, range(extrema(values)..., length=bins), weights)
 
-weightedHistogram(values::Array{T} where T<:Real,
+# weights in kw
+weightedHistogram(values::V where V <: AbstractVectorReal,
     bins::E where E<:AbstractVector;
-    weights::Array{T} where T<:Real = one.(values)) = weightedHistogram(values, bins, weights)
+    weights::V where V <: AbstractVectorReal = one.(values)) = weightedHistogram(values, bins, weights)
 
-weightedHistogram(values::Array{T} where T<:Real;
+# weights, bins in kw
+weightedHistogram(values::V where V <: AbstractVectorReal;
     bins::Union{<:Integer,<:AbstractVector} = 30,
-    weights::Array{T} where T<:Real = one.(values)) = weightedHistogram(values, bins, weights=weights)
+    weights::V where V <: AbstractVectorReal = one.(values)) = weightedHistogram(values, bins, weights=weights)
