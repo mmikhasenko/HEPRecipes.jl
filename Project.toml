@@ -1,7 +1,7 @@
 name = "HEPRecipes"
 uuid = "13ebb339-f092-412f-a286-f7290b551f86"
 authors = ["Misha Mikhasenko <mikhail.mikhasenko@gmail.com>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 QuadGK = "1fd47b50-473d-5c70-9696-f719f8f3bcdc"
