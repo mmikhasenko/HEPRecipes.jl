@@ -1,4 +1,4 @@
-using Distributions
+# using Distributions
 
 # poissonquantile(n) = [
 #     n==0 ? 0.0 : quantile(Chisq(2n), 0.159),
