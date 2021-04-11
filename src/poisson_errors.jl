@@ -1,3 +1,6 @@
+# references:
+# http://www.pp.rhul.ac.uk/~cowan/atlas/ErrorBars.pdf
+# 
 # using Distributions
 
 # poissonquantile(n) = [
